@@ -1,9 +1,16 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const router = express.Router();
-const coursesPath = path.join(__dirname, '../data/courses.json');
+const express = require('express')
+const router = express.Router()
 
-// Your route handlers...
+// Get all courses
+router.get('/', (req, res) => {
+	// Send a response here, for example, an array of courses
+	res.json({ message: 'Courses fetched successfully' })
+})
 
-module.exports = router; // Ensure you export the router here
+// Add a new course
+router.post('/', (req, res) => {
+	// Handle course creation
+	res.json({ message: 'Course added successfully' })
+})
+
+module.exports = router
