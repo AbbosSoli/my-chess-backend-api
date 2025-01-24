@@ -1,25 +1,9 @@
-// Add a new course
-router.post('/', (req, res) => {
-	const courses = require(coursesPath)
-	const { courseName, description, lessons, duration } = req.body
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const router = express.Router();
+const coursesPath = path.join(__dirname, '../data/courses.json');
 
-	// Validate input (remove the id check)
-	if (
-		!courseName ||
-		!description ||
-		lessons === undefined ||
-		duration === undefined
-	) {
-		return res.status(400).send('Invalid course data')
-	}
+// Your route handlers...
 
-	// Auto-generate id (if courses are not empty, take the next id, otherwise start with 1)
-	const newId = courses.length ? Math.max(...courses.map(c => c.id)) + 1 : 1
-
-	// Add new course
-	const newCourse = { id: newId, courseName, description, lessons, duration }
-	courses.push(newCourse)
-	saveCourses(courses)
-
-	res.status(201).json(newCourse)
-})
+module.exports = router; // Ensure you export the router here
