@@ -1,0 +1,16 @@
+[
+  {
+    "id": "2b43",
+    "courseName": "O'rtacha",
+    "description": "Havaskor",
+    "lessons": 11,
+    "duration": 233
+  },
+  {
+    "id": "433d",
+    "courseName": "Qiyin",
+    "description": "Turnir o'yinchisi",
+    "lessons": 2,
+    "duration": 120
+  }
+]
