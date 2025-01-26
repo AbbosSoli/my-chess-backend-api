@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 
 // Get a course by ID
 router.get('/:id', (req, res) => {
-	const courseId = parseInt(req.params.id, 10) // Ensure id is a number
-	const course = courses.find(c => c.id === courseId)
+	const courseId = req.params.id // Treat the id as a string
+	const course = courses.find(c => c.id === courseId) // Compare as strings
 	if (course) {
 		res.json(course)
 	} else {
@@ -26,7 +26,10 @@ router.post('/', (req, res) => {
 		return res.status(400).send('Invalid course data')
 	}
 
-	const newId = courses.length > 0 ? Math.max(...courses.map(c => c.id)) + 1 : 1
+	const newId =
+		courses.length > 0
+			? (Math.max(...courses.map(c => parseInt(c.id, 10))) + 1).toString()
+			: '1' // Ensure newId is a string
 	const createdCourse = {
 		id: newId,
 		courseName,
@@ -40,10 +43,10 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-	const courseId = parseInt(req.params.id, 10)
+	const courseId = req.params.id // Treat the id as a string
 	const { courseName, description, lessons, duration } = req.body
 
-	const courseIndex = courses.findIndex(c => c.id === courseId)
+	const courseIndex = courses.findIndex(c => c.id === courseId) // Compare as strings
 	if (courseIndex === -1) {
 		return res.status(404).send('Course not found')
 	}
@@ -64,8 +67,8 @@ router.put('/:id', (req, res) => {
 
 // Delete a course by ID
 router.delete('/:id', (req, res) => {
-	const courseId = parseInt(req.params.id, 10)
-	const courseIndex = courses.findIndex(c => c.id === courseId)
+	const courseId = req.params.id // Treat the id as a string
+	const courseIndex = courses.findIndex(c => c.id === courseId) // Compare as strings
 
 	if (courseIndex === -1) {
 		return res.status(404).send('Course not found')
@@ -75,4 +78,5 @@ router.delete('/:id', (req, res) => {
 	saveCoursesToFile() // Save changes
 	res.json(deletedCourse)
 })
+
 module.exports = router
