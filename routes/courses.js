@@ -64,6 +64,15 @@ router.put('/:id', (req, res) => {
 	}
 	res.json(courses[courseIndex])
 })
+const fs = require('fs')
+const path = require('path')
+
+const saveCoursesToFile = () => {
+	const filePath = path.join(__dirname, '../data/courses.json')
+
+	// Save the updated courses array back to the file
+	fs.writeFileSync(filePath, JSON.stringify(courses, null, 2), 'utf-8')
+}
 
 // Delete a course by ID
 router.delete('/:id', (req, res) => {
@@ -74,9 +83,10 @@ router.delete('/:id', (req, res) => {
 		return res.status(404).send('Course not found')
 	}
 
-	const deletedCourse = courses.splice(courseIndex, 1)
-	saveCoursesToFile() // Save changes
-	res.json(deletedCourse)
+	const deletedCourse = courses.splice(courseIndex, 1) // Remove the course from the array
+	saveCoursesToFile() // Save changes to the file
+
+	res.json(deletedCourse) // Send the deleted course as a response
 })
 
 module.exports = router
